@@ -28,20 +28,40 @@ public class LockTest {
 
 
     public static void main(String[] args) {
+
+
+//        .lock
+//        锁代码块等针对的是对象，对象是唯一的额，而这种是对象里面的局部变量，
+//        可以考虑是无状态独享，每个线程都会复制一份;只有设计成全局对象，才能保证锁住
+//        即便是两个对象，也可以保证，因为静态变量是被该类的所有对象共享
+//        (当为成员变量时，如果是单例，则无法保证，因为两个对象的成员变量不同)
         ReadLock readLock = new ReadLock();
-       // ReadLock readLock1 = new ReadLock();
-        new Thread(readLock).start();//锁代码块等针对的是对象，对象是唯一的额，而这种是对象里面的局部变量，
-        //可以考虑是无状态独享，每个线程都会复制一份;只有设计成全局对象，才能保证锁住
+        ReadLock readLock1 = new ReadLock();
+        new Thread(readLock).start();
+        new Thread(readLock).start();
 
-        //即便是两个对象，也可以保证，因为静态变量是被该类的所有对象共享的
-        Thread thread = new Thread(readLock);
-        thread.start();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        thread.interrupt();
+
+//        .tryLock   未获取到锁的线程将不会等待，直接释放资源:
+//        ReadLock readLock = new ReadLock();
+//        new Thread(readLock).start();
+//        new Thread(readLock).start();
+
+
+
+//        lockIntered当该线程处于等待阻塞时，调用线程叨扰方法会使改方法抛出异常，并中断等待
+//
+//        ReadLock readLock = new ReadLock();
+//        Thread thread1 = new Thread(readLock);
+//        Thread thread2 = new Thread((readLock));
+//        thread1.start();
+//        thread2.start();
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        thread1.interrupt();
+//        thread2.interrupt();
     }
 }

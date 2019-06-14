@@ -3,19 +3,23 @@ package com.lock;
 import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 其实这个类代表的是可重入锁:
+ */
+
 public class ReadLock implements Runnable {
 
-    private static ReentrantLock reentrantLock = new ReentrantLock();
+    private ReentrantLock reentrantLock = new ReentrantLock();
 
     @Override
     public void run() {
-       // this.testLock();
-       /// this.tesLock();
+//        this.testLock();
+//        this.tesLock();
         try {
             this.testLockInternet();
         } catch (InterruptedException e) {
             System.out.println(Thread.currentThread().getName()+"中断了等待锁");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -65,7 +69,7 @@ public class ReadLock implements Runnable {
         reentrantLock.lockInterruptibly();
         try{
             System.out.println("当前线程获取了锁,"+Thread.currentThread().getName());
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         }catch (Exception e){
 
         }finally {
